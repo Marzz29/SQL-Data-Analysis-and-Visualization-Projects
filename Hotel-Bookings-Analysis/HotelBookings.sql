@@ -26,24 +26,34 @@ FROM dbo.[2019Booking]
 UNION
 SELECT *
 FROM dbo.[2020Booking])
-/* Use the distinct function to explore the unique values in each column*/
---SELECT DISTINCT hotel 
---SELECT DISTINCT is_canceled
---SELECT DISTINCT meal
---SELECT DISTINCT country
---SELECT DISTINCT market_segment
-SELECT DISTINCT distribution_channel
---SELECT DISTINCT is_repeated_guest
---SELECT DISTINCT previous_cancellations
---SELECT DISTINCT previous_bookings_not_canceled
---SELECT DISTINCT reserved_room_type
---SELECT DISTINCT assigned_room_type
---SELECT DISTINCT booking_changes
---SELECT DISTINCT deposit_type
---SELECT DISTINCT agent
---SELECT DISTINCT company
---SELECT DISTINCT customer_type
---SELECT DISTINCT required_car_parking_spaces
---SELECT DISTINCT total_of_special_requests
---SELECT DISTINCT reservation_status
-FROM Hotels
+/* Use the COUNT and GROUP BY function to explore the number of guests that booked the different hotels*/
+--SELECT hotel AS hotel_type, COUNT(hotel) AS hotel_count
+--FROM Hotels
+--GROUP BY hotel
+
+/* Use the COUNT and GROUP BY function to see how many guests canceled their trip*/
+--SELECT hotel, is_canceled, COUNT(is_canceled) AS cancellation
+--FROM Hotels
+--GROUP BY hotel, is_canceled
+
+/*A query that finds out which month is the highest amount of bookings that did not cancel*/
+--SELECT hotel, arrival_date_month, COUNT(arrival_date_month) AS Amount_of_guests
+--FROM Hotels
+--WHERE is_canceled != 1
+--GROUP BY hotel, arrival_date_month
+--ORDER BY Amount_of_guests DESC
+
+/* A query that finds out the number of days that elapsed between entering the date of booking and the arrival date for each year)*/
+--SELECT arrival_date_year, ROUND(AVG(lead_time), 0) AS Avg_lead_time
+--FROM Hotels
+--GROUP BY arrival_date_year
+
+/*A query that retrieves the meal types, the number of guests who ordered them, and the revenue from each meal type*/
+--SELECT H.meal, Cost, COUNT(H.meal) AS number_of_guests, COUNT(H.meal)* Cost AS MealType_Revenue
+--FROM Hotels AS H
+--JOIN meal_cost As M
+--ON H.meal = M.meal
+--GROUP BY H.meal, Cost
+--ORDER BY MealType_Revenue DESC
+
+/**/
