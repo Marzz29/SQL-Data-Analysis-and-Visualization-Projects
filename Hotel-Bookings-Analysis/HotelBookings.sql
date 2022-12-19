@@ -43,7 +43,7 @@ FROM dbo.[2020Booking])
 --GROUP BY hotel, arrival_date_month
 --ORDER BY Amount_of_guests DESC
 
-/* A query that finds out the number of days that elapsed between entering the date of booking and the arrival date for each year)*/
+/* A query that finds out the number of days that elapsed between entering the date of booking and the arrival date for each year*/
 --SELECT arrival_date_year, ROUND(AVG(lead_time), 0) AS Avg_lead_time
 --FROM Hotels
 --GROUP BY arrival_date_year
@@ -56,4 +56,25 @@ FROM dbo.[2020Booking])
 --GROUP BY H.meal, Cost
 --ORDER BY MealType_Revenue DESC
 
-/**/
+/*A query that shows how many guests book from different market segments */
+--SELECT market_segment, COUNT(market_segment) AS Number_of_guests
+--FROM Hotels
+--WHERE is_canceled != 1
+--GROUP BY market_segment
+--ORDER BY Number_of_guests DESC
+
+/* Number of guests who had their rooms changed*/
+--SELECT  COUNT(hotel) AS Number_of_changed_rooms
+--FROM Hotels
+--WHERE reserved_room_type != assigned_room_type
+--	AND is_canceled != 1
+
+/* ID of Travel agency that made the most booking*/
+--SELECT agent, COUNT(agent) AS Number_of_bookings_made
+--FROM Hotels
+--WHERE is_canceled != 1
+--GROUP BY agent
+--ORDER BY Number_of_bookings_made DESC 
+
+
+
