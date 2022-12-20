@@ -18,14 +18,22 @@
 Create a temporary table with the with statement to perform exploratory data analysis on the unified dataset */
 
 WITH Hotels AS (
-SELECT *
+SELECT *, adults + children + babies AS Total_guests, stays_in_weekend_nights + stays_in_week_nights AS Total_stays_in_hotel, (stays_in_weekend_nights + stays_in_week_nights)* adr AS Revenue
 FROM dbo.[2018Booking]
 UNION
-SELECT *
+SELECT *, adults + children + babies AS Total_guests, stays_in_weekend_nights + stays_in_week_nights AS Total_stays_in_hotel, (stays_in_weekend_nights + stays_in_week_nights)* adr AS Revenue
 FROM dbo.[2019Booking]
 UNION
-SELECT *
+SELECT *, adults + children + babies AS Total_guests, stays_in_weekend_nights + stays_in_week_nights AS Total_stays_in_hotel, (stays_in_weekend_nights + stays_in_week_nights)* adr AS Revenue
 FROM dbo.[2020Booking])
+
+SELECT *
+FROM Hotels
+LEFT JOIN dbo.market_segment
+ON Hotels.market_segment = market_segment.market_segment
+LEFT JOIN dbo.meal_cost
+ON Hotels.meal = meal_cost.meal
+
 /* Use the COUNT and GROUP BY function to explore the number of guests that booked the different hotels*/
 --SELECT hotel AS hotel_type, COUNT(hotel) AS hotel_count
 --FROM Hotels
@@ -36,7 +44,7 @@ FROM dbo.[2020Booking])
 --FROM Hotels
 --GROUP BY hotel, is_canceled
 
-/*A query that finds out which month is the highest amount of bookings that did not cancel*/
+/*A query that finds out which month has the highest amount of bookings that did not cancel*/
 --SELECT hotel, arrival_date_month, COUNT(arrival_date_month) AS Amount_of_guests
 --FROM Hotels
 --WHERE is_canceled != 1
@@ -69,12 +77,22 @@ FROM dbo.[2020Booking])
 --WHERE reserved_room_type != assigned_room_type
 --	AND is_canceled != 1
 
-/* ID of Travel agency that made the most booking*/
+/* ID of Travel agency that made the most booking of guests who did not cancel*/
 --SELECT agent, COUNT(agent) AS Number_of_bookings_made
 --FROM Hotels
 --WHERE is_canceled != 1
 --GROUP BY agent
 --ORDER BY Number_of_bookings_made DESC 
 
-
-
+/* Total people who made a booking*/
+--SELECT *, adults + children + babies AS Total_guests
+--FROM Hotels
+/* Total stays in hotel*/ 
+--SELECT *, stays_in_weekend_nights + Stays_in_week_nights AS Total_stays_in_hotel
+--FROM Hotels
+/* Revenue from each stay*/
+--SELECT
+--arrival_date_year,
+--(stays_in_weekend_nights + stays_in_week_nights) * adr AS Revenue
+--FROM Hotels
+--WHERE arrival_date_year = 2020
