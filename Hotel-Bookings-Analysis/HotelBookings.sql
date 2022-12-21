@@ -27,12 +27,12 @@ UNION
 SELECT *, adults + children + babies AS Total_guests, stays_in_weekend_nights + stays_in_week_nights AS Total_stays_in_hotel, (stays_in_weekend_nights + stays_in_week_nights)* adr AS Revenue
 FROM dbo.[2020Booking])
 
-SELECT *
-FROM Hotels
-LEFT JOIN dbo.market_segment
-ON Hotels.market_segment = market_segment.market_segment
-LEFT JOIN dbo.meal_cost
-ON Hotels.meal = meal_cost.meal
+--SELECT *
+--FROM Hotels
+--LEFT JOIN dbo.market_segment
+--ON Hotels.market_segment = market_segment.market_segment
+--LEFT JOIN dbo.meal_cost
+--ON Hotels.meal = meal_cost.meal
 
 /* Use the COUNT and GROUP BY function to explore the number of guests that booked the different hotels*/
 --SELECT hotel AS hotel_type, COUNT(hotel) AS hotel_count
@@ -96,3 +96,6 @@ ON Hotels.meal = meal_cost.meal
 --(stays_in_weekend_nights + stays_in_week_nights) * adr AS Revenue
 --FROM Hotels
 --WHERE arrival_date_year = 2020
+
+
+
